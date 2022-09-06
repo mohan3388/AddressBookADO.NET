@@ -64,6 +64,15 @@
                             }
                         }
                         break;
+                    case 5:
+                        Model model = new Model();
+                        Console.WriteLine("Enter City name: ");
+                        string City = Console.ReadLine();
+                        Console.WriteLine("Enter State name: ");
+                        string State = Console.ReadLine();
+                        repo.RetrieveDataUsingCityName(City, State);
+                        
+                        break;
                     default:
                         Console.WriteLine("Please Enter the Correct option");
                         break;

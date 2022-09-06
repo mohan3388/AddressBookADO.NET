@@ -158,5 +158,51 @@ namespace AddressBook
                 return false;
             }
         }
+
+        public List<Model> RetrieveDataUsingCityName(string City, string State)
+        {
+           
+            List<Model> EmpList = new List<Model>();
+            SqlCommand com = new SqlCommand("spViewContactsUsingCityName", connection);
+            connection.Open();
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@City", City);
+            com.Parameters.AddWithValue("@State", State);
+            SqlDataReader da = com.ExecuteReader();
+            DataTable dt = new DataTable();
+
+
+
+            if (da.HasRows)
+            {
+                while (da.Read())
+                {
+                    Model emp = new Model();
+                    emp.FirstName = da.GetString(1);
+                    emp.LastName = da.GetString(2);
+                    emp.Address = da.GetString(3);
+                    emp.City = da.GetString(4);
+                    emp.State = da.GetString(5);
+                    emp.ZipCode = da.GetInt32(6);
+                    emp.PhoneNumber = da.GetString(7);
+                    emp.Email = da.GetString(8);
+                    List<Model> list = new List<Model>();
+                    list.Add(emp);
+                    DisplayEmployeeDetails(list);
+                }
+            }
+            connection.Close();
+            //Bind EmpModel generic list using dataRow     
+
+            return EmpList;
+        }
+        public void DisplayEmployeeDetails(List<Model> sqlDataReader)
+        {
+            foreach (Model addressBookModel in sqlDataReader)
+            {
+                Console.WriteLine("FirstName: " + addressBookModel.FirstName + " LastName: " + addressBookModel.LastName + " Address: " + addressBookModel.Address + " City: " + addressBookModel.City + " State: " + addressBookModel.State + " ZipCode " + addressBookModel.ZipCode + " Phone number " + addressBookModel.PhoneNumber + " Email " + addressBookModel.Email);
+            }
+          
+        }
     }
 }

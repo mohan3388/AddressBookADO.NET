@@ -62,3 +62,18 @@ as
 begin
 Delete from ContactDetails where Id=@Id 
 end
+
+
+--- Retrieve Data using City name-----
+CREATE PROCEDURE spViewContactsUsingCityName
+(
+@City varchar(25),
+@State varchar(60)
+)
+as
+begin 
+select * from ContactDetails where City = @City and State = @State;
+end
+
+
+
