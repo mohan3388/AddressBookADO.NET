@@ -33,5 +33,23 @@ INSERT INTO ContactDetails(FirstName, LastName, Address, City, State, ZipCode, P
 	VALUES (@FirstName, @LastName, @Address, @City, @State, @ZipCode, @PhoneNumber, @Email)
 end
 
+----Select procedure----
+CREATE PROCEDURE spViewContacts
+as
+begin
+select * from ContactDetails
+end
+
+----Update procedure---
+create procedure SPUpdateDetails
+(
+@Id int,
+@PhoneNumber varchar(10)
+)
+as
+begin
+UPDATE ContactDetails set PhoneNumber=@PhoneNumber where Id = @Id
+end
+
 
 select * from ContactDetails
