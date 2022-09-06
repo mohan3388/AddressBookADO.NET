@@ -34,4 +34,31 @@ INSERT INTO ContactDetails(FirstName, LastName, Address, City, State, ZipCode, P
 end
 
 
+
+----Select procedure----
+CREATE PROCEDURE spViewContacts
+as
+begin
 select * from ContactDetails
+end
+
+----Update procedure---
+create procedure SPUpdateDetails
+(
+@Id int,
+@PhoneNumber varchar(10)
+)
+as
+begin
+UPDATE ContactDetails set PhoneNumber=@PhoneNumber where Id = @Id
+end
+
+----Delete procedure---
+create procedure spDeletePersonById
+(
+@Id int
+)
+as
+begin
+Delete from ContactDetails where Id=@Id 
+end

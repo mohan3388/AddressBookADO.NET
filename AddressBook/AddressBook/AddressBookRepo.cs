@@ -136,5 +136,27 @@ namespace AddressBook
                 return false;
             }
         }
+
+        //Delete details
+        public bool DeleteEmployee(int Id)
+        {
+          
+            SqlCommand com = new SqlCommand("spDeletePersonById", connection);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", Id);
+
+            connection.Open();
+            int i = com.ExecuteNonQuery();
+            connection.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

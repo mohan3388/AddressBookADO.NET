@@ -10,7 +10,7 @@
             bool check = true;
             while (check)
             {
-                Console.WriteLine("1. To check connection \n2. To Insert the Data in Data Base \n3. Edit data");
+                Console.WriteLine("1. To check connection \n2. To Insert the Data in Data Base \n3. Edit data\n4. Delete Data");
                 Console.WriteLine("Enter the Above Option");
                 int option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
@@ -46,6 +46,23 @@
                         emp.PhoneNumber = "7847850147";
                         repo.UpdateEmp(emp);
                       
+                        break;
+                    case 4:
+                        List<Model> eList = repo.GetAllEmployees();
+                        Console.WriteLine("Enter the Contact Id to Delete the Record  From the Table");
+                        int empId = Convert.ToInt32(Console.ReadLine());
+                        foreach (Model data in eList)
+                        {
+                            if (data.Id == empId)
+                            {
+                                repo.DeleteEmployee(empId);
+                                Console.WriteLine("Record Successfully Deleted");
+                            }
+                            else
+                            {
+                                Console.WriteLine(empId + "is Not present int he Data base");
+                            }
+                        }
                         break;
                     default:
                         Console.WriteLine("Please Enter the Correct option");
