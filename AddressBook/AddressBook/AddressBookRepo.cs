@@ -81,5 +81,60 @@ namespace AddressBook
                 this.connection.Close();
             }
         }
+        public List<Model> GetAllEmployees()
+        {
+            
+            List<Model> EmpList = new List<Model>();
+            SqlCommand com = new SqlCommand("spViewContacts", connection);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            connection.Open();
+            da.Fill(dt);
+            connection.Close();
+            //Bind EmpModel generic list using dataRow     
+            foreach (DataRow dr in dt.Rows)
+            {
+                EmpList.Add(
+                    new Model
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        FirstName = Convert.ToString(dr["FirstName"]),
+                        LastName = Convert.ToString(dr["LastName"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        City = Convert.ToString(dr["City"]),
+                        State = Convert.ToString(dr["State"]),
+                        ZipCode = Convert.ToInt32(dr["ZipCode"]),
+                        PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
+                        Email = Convert.ToString(dr["Email"]),
+
+                    }
+                    );
+            }
+            return EmpList;
+        }
+        //To Update Emp data   
+        public bool UpdateEmp(Model obj)
+        {
+           
+            SqlCommand com = new SqlCommand("SPUpdateDetails", connection);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", obj.Id);
+
+            com.Parameters.AddWithValue("@PhoneNumber", obj.PhoneNumber);
+
+            connection.Open();
+            int i = com.ExecuteNonQuery();
+            connection.Close();
+            if (i != 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
