@@ -73,6 +73,15 @@
                         repo.RetrieveDataUsingCityName(City, State);
                         
                         break;
+                    case 6:
+                       
+                        Console.WriteLine("Enter city and state");
+                        string cityName = Console.ReadLine();
+
+                        //string stateName = Console.ReadLine();
+
+                        repo.CountDataFromCityAndState(cityName);
+                        break;
                     default:
                         Console.WriteLine("Please Enter the Correct option");
                         break;

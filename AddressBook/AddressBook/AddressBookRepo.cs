@@ -204,5 +204,47 @@ namespace AddressBook
             }
           
         }
+        public bool CountDataFromCityAndState(Model address)
+        {
+            
+
+            List<Model> list = new List<Model>();
+           
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand("CountByCityState", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue(@"City", address.City);
+                command.Parameters.AddWithValue(@"State", address.State);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        address.Id = reader.GetInt32(0);
+                        address.FirstName = reader.GetString(1);
+                        address.LastName = reader.GetString(2);
+                        address.Address = reader.GetString(3);
+                        address.City = reader.GetString(4);
+                        address.State = reader.GetString(5);
+                        address.ZipCode = reader.GetInt32(6);
+                        address.PhoneNumber = reader.GetString(7);
+                        address.Email = reader.GetString(8);
+                        list.Add(address);
+
+                    }
+                    Console.WriteLine("Count the Address");
+                    Console.WriteLine(list.Count());
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Data Found");
+                    return false;
+                }
+                connection.Close();
+            }
+        }
     }
 }
